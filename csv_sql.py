@@ -44,10 +44,11 @@ def main():
 
         # SQL Query Section
         st.subheader("SQL Query")
-        query = st.text_area("Enter your SQL query:", "SELECT * FROM df LIMIT 5")
+        query = st.text_area("Enter your SQL query:", "SELECT * FROM data LIMIT 5")
         if st.button("Run Query"):
             try:
-                query_result = sqldf(query, globals())
+                pysqldf = lambda q: sqldf(q, {'data': df})
+                query_result = pysqldf(query)
                 st.dataframe(query_result)
             except Exception as e:
                 st.error(f"Error executing query: {str(e)}")
